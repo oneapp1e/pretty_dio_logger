@@ -222,18 +222,17 @@ class PrettyDioLogger extends Interceptor {
           logPrint('║${_indent(_tabs)} ]${isLast ? '' : ','}');
         }
       } else {
-        final msg = value.toString().replaceAll('\n', '');
+        final msg = "$key: " + value.toString().replaceAll('\n', '');
         final indent = _indent(_tabs);
         final linWidth = maxWidth - indent.length;
         if (msg.length + indent.length > linWidth) {
           final lines = (msg.length / linWidth).ceil();
           for (var i = 0; i < lines; ++i) {
-            var lineKey = i == 0 ? "$key：" : "";
             logPrint(
-                '║${_indent(_tabs)} $lineKey${msg.substring(i * linWidth, math.min<int>(i * linWidth + linWidth, msg.length))}');
+                '║${_indent(_tabs)} ${msg.substring(i * linWidth, math.min<int>(i * linWidth + linWidth, msg.length))}');
           }
         } else {
-          logPrint('║${_indent(_tabs)} $key: $msg${!isLast ? ',' : ''}');
+          logPrint('║${_indent(_tabs)} $msg${!isLast ? ',' : ''}');
         }
       }
     });
